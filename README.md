@@ -7,7 +7,7 @@
 
 - 📫 How to reach me *pachauriankit7@gmail.com*
 
-- ⚡ Fun fact *I am a singer (bathroom)*
+- ⚡ Fun fact *I can make funny song lyrics
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
