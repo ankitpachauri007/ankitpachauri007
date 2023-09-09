@@ -1,0 +1,55 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Question {
+    private String questionText;
+    private String correctAnswer;
+
+    public Question(String questionText, String correctAnswer) {
+        this.questionText = questionText;
+        this.correctAnswer = correctAnswer;
+    }
+
+    public String getQuestionText() {
+        return questionText;
+    }
+
+    public boolean isCorrect(String userAnswer) {
+        return correctAnswer.equalsIgnoreCase(userAnswer);
+    }
+}
+
+public class SimpleQuizApp {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int score = 0;
+
+        List<Question> questions = new ArrayList<>();
+        questions.add(new Question("What is the capital of France?", "Paris"));
+        questions.add(new Question("Which planet is known as the Red Planet?", "Mars"));
+        questions.add(new Question("What is 2 + 2?", "4"));
+
+        System.out.println("Welcome to the Simple Quiz App!");
+        System.out.println("Answer the following questions:");
+
+        for (int i = 0; i < questions.size(); i++) {
+            Question question = questions.get(i);
+            System.out.println("\nQuestion " + (i + 1) + ": " + question.getQuestionText());
+            System.out.print("Your answer: ");
+            String userAnswer = scanner.nextLine();
+
+            if (question.isCorrect(userAnswer)) {
+                System.out.println("Correct!");
+                score++;
+            } else {
+                System.out.println("Incorrect. The correct answer is: " + question.correctAnswer);
+            }
+        }
+
+        System.out.println("\nQuiz complete!");
+        System.out.println("Your score: " + score + " out of " + questions.size());
+
+        scanner.close();
+    }
+}
