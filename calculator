@@ -1,0 +1,115 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class BasicCalculatorApp {
+
+    private JFrame frame;
+    private JPanel panel;
+    private JTextField inputField;
+    private JButton[] numberButtons;
+    private JButton[] operationButtons;
+    private JButton equalsButton;
+    private JButton clearButton;
+
+    private double firstNumber;
+    private String operator;
+
+    public BasicCalculatorApp() {
+        frame = new JFrame("Basic Calculator");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 400);
+        frame.setLayout(new BorderLayout());
+
+        inputField = new JTextField();
+        inputField.setPreferredSize(new Dimension(0, 50));
+        inputField.setFont(new Font("Arial", Font.PLAIN, 24));
+        inputField.setHorizontalAlignment(JTextField.RIGHT);
+        frame.add(inputField, BorderLayout.NORTH);
+
+        panel = new JPanel();
+        panel.setLayout(new GridLayout(4, 4));
+
+        numberButtons = new JButton[10];
+        for (int i = 0; i < 10; i++) {
+            numberButtons[i] = new JButton(String.valueOf(i));
+            numberButtons[i].setFont(new Font("Arial", Font.PLAIN, 18));
+            final int num = i;
+            numberButtons[i].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    inputField.setText(inputField.getText() + num);
+                }
+            });
+            panel.add(numberButtons[i]);
+        }
+
+        operationButtons = new JButton[4];
+        operationButtons[0] = new JButton("+");
+        operationButtons[1] = new JButton("-");
+        operationButtons[2] = new JButton("*");
+        operationButtons[3] = new JButton("/");
+        for (int i = 0; i < 4; i++) {
+            operationButtons[i].setFont(new Font("Arial", Font.PLAIN, 18));
+            final String op = operationButtons[i].getText();
+            operationButtons[i].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    firstNumber = Double.parseDouble(inputField.getText());
+                    operator = op;
+                    inputField.setText("");
+                }
+            });
+            panel.add(operationButtons[i]);
+        }
+
+        clearButton = new JButton("C");
+        clearButton.setFont(new Font("Arial", Font.PLAIN, 18));
+        clearButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                inputField.setText("");
+            }
+        });
+        panel.add(clearButton);
+
+        equalsButton = new JButton("=");
+        equalsButton.setFont(new Font("Arial", Font.PLAIN, 18));
+        equalsButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                double secondNumber = Double.parseDouble(inputField.getText());
+                double result = 0;
+
+                switch (operator) {
+                    case "+":
+                        result = firstNumber + secondNumber;
+                        break;
+                    case "-":
+                        result = firstNumber - secondNumber;
+                        break;
+                    case "*":
+                        result = firstNumber * secondNumber;
+                        break;
+                    case "/":
+                        if (secondNumber != 0) {
+                            result = firstNumber / secondNumber;
+                        } else {
+                            inputField.setText("Error");
+                        }
+                        break;
+                }
+                inputField.setText(String.valueOf(result));
+            }
+        });
+        panel.add(equalsButton);
+
+        frame.add(panel, BorderLayout.CENTER);
+        frame.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new BasicCalculatorApp();
+            }
+        });
+    }
+}
